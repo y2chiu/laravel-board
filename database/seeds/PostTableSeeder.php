@@ -15,6 +15,7 @@ class PostTableSeeder extends Seeder {
                     'nickname'   => 'User '.$v, 
                     'email'      => sprintf('aaa%d@aaa%d.com', $v, $v),
                     'post'       => 'This is post '.$v,
+                    'title'      => 'Post title '.$v,
                     'created_at' => new DateTime, 
                     'updated_at' => new DateTime,
                 ];

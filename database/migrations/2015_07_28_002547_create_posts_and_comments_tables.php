@@ -16,6 +16,7 @@ class CreatePostsAndCommentsTables extends Migration
             $table->increments('id');
             $table->string('nickname')-> default('Noname');
             $table->string('email');
+            $table->string('title');
             $table->text('post');
             $table-> integer('score') -> signed() -> default(0);
             $table->timestamps();
@@ -27,6 +28,7 @@ class CreatePostsAndCommentsTables extends Migration
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->string('nickname')-> default('Noname');
             $table->string('email');
+            $table->string('title');
             $table->text('comment');
             $table-> integer('score') -> signed() -> default(0);
             $table->timestamps();

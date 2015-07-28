@@ -15,6 +15,7 @@ class CommentTableSeeder extends Seeder {
                     'post_id'    => $v,
                     'nickname'   => 'User '.$v, 
                     'email'      => sprintf('bbb%d@bbb%d.com', $v, $v),
+                    'title'      => 'Comment title '.$v,
                     'comment'    => 'This is comment '.$v,
                     'created_at' => new DateTime, 
                     'updated_at' => new DateTime,
