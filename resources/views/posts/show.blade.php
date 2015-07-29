@@ -1,30 +1,53 @@
 @extends('app')
  
 @section('content')
-    <h2>{{ $post->title }}</h2>
-    {{ $post->post }}
+                    <div class="thumbnail">
+                        <div class="caption-full">
+                            <h4 class="pull-right">{{ $post->nickname }}</h4>
+                            <h4>{{ $post->title }}</h4>
+                            
+                            <p>{!! nl2br($post->post) !!}</p>
+                        </div>
+                        <div class="pull-right">
+                            {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('posts.destroy', $post->id))) !!}
+                                {!! link_to_route('posts.edit', 'Edit', [$post->id], ['class'=>'alert-info']) !!}&nbsp;
+                                {!! Form::submit('Delete', ['class'=>'alert-danger no-border']) !!}
+                            {!! Form::close() !!}
+                        </div>
+                        <br>
+                        <div class="ratings">
+                            &nbsp;
+                            <p class="pull-left">{{ $post->comments->count() }} reviews</p>
+                        </div>
+                    </div>
 
-    @if ( !$post->comments->count() )
-        Your post has no comments.
-    @else
-        <ul>
-            @foreach( $post->comments as $comment )
-                <li>
-                    {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('posts.comments.destroy', $post->id, $comment->id))) !!}
-                        <a href="{{ route('posts.comments.show', [$post->id, $comment->id]) }}">{{ $comment->comment }}</a>
-                        (
-                            {!! link_to_route('posts.comments.edit', 'Edit', array($post->id, $comment->id), array('class' => 'btn btn-info')) !!},
- 
-                            {!! Form::submit('Delete', array('class' => 'btn btn-danger')) !!}
-                        )
-                    {!! Form::close() !!}
-                </li>
-            @endforeach
-        </ul>
+
+                    <div class="well">
+
+                        <div class="text-right">
+                            {!! link_to_route('posts.comments.create', 'Leave a Comment', $post->id, ['class'=>'btn btn-success']) !!}
+                            {!! link_to_route('posts.index', 'Back to Posts', [], ['class'=>'btn btn-primary']) !!}
+                        </div>
+
+    @if ( $post->comments->count() )
+        @foreach( $post->comments as $comment )
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ $comment->nickname }}
+                                <span class="pull-right">time</span>
+                                <p>{!! nl2br($comment->comment) !!}</p>
+                                <div class="pull-right">
+                                    {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('posts.comments.destroy', $post->id, $comment->id))) !!}
+                                        {!! link_to_route('posts.comments.edit', 'Edit', array($post->id, $comment->id), ['class'=>'alert-info']) !!}&nbsp;
+                                        {!! Form::submit('Delete', ['class'=>'alert-danger no-border']) !!}
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                        </div>
+        @endforeach
+                    </div>
     @endif
- 
-    <p>
-        {!! link_to_route('posts.index', 'Back to Posts') !!} |
-        {!! link_to_route('posts.comments.create', 'Create comment', $post->id) !!}
-    </p>
+
 @endsection

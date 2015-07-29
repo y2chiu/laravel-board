@@ -1,9 +1,18 @@
 @extends('app')
  
 @section('content')
-    <h2>Create Post</h2>
- 
-    {!! Form::model(new App\Post, ['route' => ['posts.store']]) !!}
-        @include('posts/partials/_form', ['submit_text' => 'Create Post'])
-    {!! Form::close() !!}
+					<p class="lead">Create Post</p>
+					<div class="thumbnail">
+					    {!! Form::model(new App\Post, 
+					    	[
+					    		'route' => ['posts.store']
+					    	]) 
+					    !!}
+					        @include('posts/partials/_form', 
+					        [
+					        	'submit_text' => 'Create Post'
+					        ])
+					    {!! Form::close() !!}
+					</div>
+    				<a href="{{ route('posts.index') }}" class="btn btn-primary">Back to Soft_Job</a>
 @endsection

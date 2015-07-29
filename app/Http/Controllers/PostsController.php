@@ -8,11 +8,19 @@ use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use DB;
 use Input;
 use Redirect;
 
 class PostsController extends Controller
 {
+    protected $rules = [
+        'nickname'  => ['required', 'min:3'],
+        'email'     => ['required'],
+        'title'     => ['required'],
+        'post'      => ['required', 'min:10'],
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +28,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        //$posts = Post::all();
+        $posts = Post::orderBy('id','desc')->paginate(10);
         return view('posts.index', compact('posts'));
     }
 
@@ -42,6 +51,8 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, $this->rules);
+        
         $input = Input::all();
         Post::create($input);
  
@@ -81,6 +92,8 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, $this->rules);
+
         $input = array_except(Input::all(), '_method');
         $post = Post::find($id);
         $post->update($input);

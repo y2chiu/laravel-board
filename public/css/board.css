@@ -1,0 +1,12 @@
+.thumbnail {
+    padding: 5px 15px;
+}
+
+.no-border {
+    border: none;
+    padding: 0;
+}
+
+h4.post-title {
+	display: inline;
+}

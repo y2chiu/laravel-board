@@ -14,23 +14,26 @@ class CreatePostsAndCommentsTables extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
+            $table-> integer('board_id') -> unsigned()-> default(0);
             $table->string('nickname')-> default('Noname');
             $table->string('email');
+            $table->string('sex')-> default('other');;
             $table->string('title');
             $table->text('post');
-            $table-> integer('score') -> signed() -> default(0);
+            $table-> integer('score') -> signed()-> default(0);
             $table->timestamps();
         });
 
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table-> integer('post_id') -> unsigned() -> default(0);
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table-> integer('post_id') -> unsigned()-> default(0);
+            $table->foreign('post_id')-> references('id')-> on('posts')-> onDelete('cascade');
             $table->string('nickname')-> default('Noname');
             $table->string('email');
-            $table->string('title');
+            $table->string('sex')-> default('other');;
+            $table->string('title')-> default('Re:');
             $table->text('comment');
-            $table-> integer('score') -> signed() -> default(0);
+            $table-> integer('score') -> signed()-> default(0);
             $table->timestamps();
         });
     }
